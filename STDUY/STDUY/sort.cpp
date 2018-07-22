@@ -41,8 +41,9 @@ void merge(int varray[], int s_index, int e_index, int mid)
 {
 	int size = e_index - s_index + 1;
 	vector<int> c(size);
-	int i = 0, j = mid + 1, k = 0;
-	while (i < mid && j < e_index)
+	int i = s_index, j = mid + 1, k = 0;
+
+	while (i <= mid && j <= e_index)
 	{
 		if (varray[i] > varray[j]) 
 		{
@@ -65,13 +66,13 @@ void merge(int varray[], int s_index, int e_index, int mid)
 	}
 	if (j <= e_index) 
 	{
-		for(int index = j; index <=e_index ; index++)
+		for(int index = j; index <= e_index ; index++)
 		{
 			c[k] = varray[index];
 			k++;
 		}
 	}
-	int ii = 0;
+	int ii = s_index;
 	for each ( int re in c)
 	{
 		printf(" %d", re);
@@ -80,14 +81,18 @@ void merge(int varray[], int s_index, int e_index, int mid)
 	}
 }
 //分治排序
-void mergesort(int varray[], int s_index, int e_index,int size) 
+void mergesort(int varray[], int s_index, int e_index) 
 {
 	//排序对前后串进行排序算法
-	int mid = size / 2;
-	if (mid == 0)
+	int mid = 0;
+	if (s_index < e_index) {
+		mid = (s_index + e_index) / 2;
+	}
+	else
 		return;
-	mergesort(varray, s_index, mid, mid - s_index + 1);
-	mergesort(varray, mid + 1, e_index, e_index - (mid + 1) + 1);
+
+	mergesort(varray, s_index, mid);
+	mergesort(varray, mid + 1, e_index);
 
 	//对两个子串排序完之后，合并两个子串
 	merge(varray, s_index, e_index, mid);
@@ -97,7 +102,7 @@ void sort(int val[], int key);
 void InsertSort(int val[], int size);
 void main() 
 {
-	int val[] = {1,5,6,10,15,2,7,16,30,40};
+	int val[] = {1,5,16,6,30,40,22,44,33};
 
 	//int size = 10;
 	//InsertSort(val, size);
@@ -106,13 +111,13 @@ void main()
 	//{
 	//	printf(" %d", val[i]);
 	//}
-	//merge(val, 0, 9, 4);
-	mergesort(val, 0, 9, 10);
+	//merge(val, 1, 3, 2);
+	mergesort(val, 0, 8);
 
 	cout << "end:" << endl;
 
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 9; i++) {
 		cout << " " << val[i];
 	}
 
